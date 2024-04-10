@@ -6,8 +6,8 @@ export default function Card({ type }: Props) {
   const title = type === 'payment' ? 'Pagamentos' : 'Recebimentos'
 
   return (
-    <section className="mx-auto flex max-w-lg items-center justify-center rounded-md bg-neutral-500 text-neutral-100 shadow">
-      <h1 className="p-2">{title}</h1>
+    <section className="my-2 w-full rounded-md bg-neutral-200 shadow md:m-2">
+      <h1 className="mb-2 p-2 text-center font-medium">{title}</h1>
     </section>
   )
 }
