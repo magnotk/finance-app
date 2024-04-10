@@ -7,3 +7,38 @@ datasource db {
   url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
+
+model Expense {
+  id          String          @id @default(cuid())
+  value       Float
+  category    ExpenseCategory @relation(fields: [category_id], references: [id])
+  expires     DateTime        @db.Date()
+  status      ExpenseStatus   @default(CURRENT)
+  category_id String
+}
+
+model Receipt {
+  id          String          @id @default(cuid())
+  value       Float
+  category    ReceiptCategory @relation(fields: [category_id], references: [id])
+  status      Boolean
+  category_id String
+}
+
+model ExpenseCategory {
+  id          String    @id @default(cuid())
+  description String
+  Expense     Expense[]
+}
+
+model ReceiptCategory {
+  id          String    @id @default(cuid())
+  description String
+  Receipt     Receipt[]
+}
+
+enum ExpenseStatus {
+  CURRENT
+  LATE
+  PAID
+}
