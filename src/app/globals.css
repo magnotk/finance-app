@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply p-2.5 md:p-5 bg-slate-300
+    @apply p-2.5 md:p-5 bg-slate-300 min-h-screen
   }
 }
