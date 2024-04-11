@@ -6,5 +6,9 @@ interface Props {
 }
 
 export function ButtonSubmit({ title, color }: Props) {
-  return <Button color={color}>{title}</Button>
+  return (
+    <Button type="submit" color={color}>
+      {title}
+    </Button>
+  )
 }

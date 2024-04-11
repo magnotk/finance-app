@@ -18,7 +18,7 @@ export default function Navbar() {
     return (
       <div
         onClick={() => setOpen(false)}
-        className={`fixed left-0 top-0 z-10 min-h-screen w-full bg-neutral-600/90 dark:bg-neutral-900/90 ${open ? 'flex flex-col' : 'hidden'}`}
+        className={`fixed left-0 top-0 z-50 min-h-screen w-full bg-neutral-600/90 dark:bg-neutral-900/90 ${open ? 'flex flex-col' : 'hidden'}`}
       >
         <nav className="flex justify-between border-b border-neutral-400 p-5">
           <FiArrowLeft
