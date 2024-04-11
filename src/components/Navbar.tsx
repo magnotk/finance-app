@@ -17,7 +17,8 @@ export default function Navbar() {
   function Modal() {
     return (
       <div
-        className={`fixed left-0 top-0 min-h-screen w-full bg-neutral-600/90 dark:bg-neutral-900/90 ${open ? 'flex flex-col' : 'hidden'}`}
+        onClick={() => setOpen(false)}
+        className={`fixed left-0 top-0 z-10 min-h-screen w-full bg-neutral-600/90 dark:bg-neutral-900/90 ${open ? 'flex flex-col' : 'hidden'}`}
       >
         <nav className="flex justify-between border-b border-neutral-400 p-5">
           <FiArrowLeft
@@ -33,7 +34,7 @@ export default function Navbar() {
             icon={<GiPayMoney size={26} />}
           />
           <ModalItem
-            href="/receipts"
+            href="/receipt"
             title="Receitas"
             icon={<GiReceiveMoney size={26} />}
           />
@@ -54,7 +55,6 @@ export default function Navbar() {
     return (
       <Link
         href={href}
-        onClick={() => setOpen(false)}
         className="flex h-20 w-24 flex-col items-center justify-center gap-1.5 truncate rounded-2xl border-2 bg-neutral-600 text-white dark:bg-neutral-800"
       >
         {icon}

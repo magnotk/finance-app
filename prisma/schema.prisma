@@ -10,19 +10,20 @@ datasource db {
 
 model Expense {
   id          String          @id @default(cuid())
-  value       Float
   category    ExpenseCategory @relation(fields: [category_id], references: [id])
-  expires     DateTime        @db.Date()
-  status      ExpenseStatus   @default(CURRENT)
   category_id String
+  description String
+  value       Float
+  status      ExpenseStatus   @default(CURRENT)
 }
 
 model Receipt {
   id          String          @id @default(cuid())
-  value       Float
   category    ReceiptCategory @relation(fields: [category_id], references: [id])
-  status      Boolean
   category_id String
+  description String
+  value       Float
+  status      Boolean
 }
 
 model ExpenseCategory {
