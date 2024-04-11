@@ -7,7 +7,7 @@ export default function LoginForm() {
   return (
     <form
       action=""
-      className="m-5 mx-auto flex max-w-lg flex-col items-center justify-center gap-5"
+      className="mx-auto flex max-w-lg flex-col items-center justify-center gap-5"
     >
       <Input label="E-mail" name="email" />
       <Input label="Senha" name="password" />
