@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-300 min-h-screen
+    @apply bg-gradient-to-tr from-stone-400 to-neutral-400 min-h-screen
   }
 
   ::-webkit-scrollbar {
