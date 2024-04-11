@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply min-h-screen bg-gradient-to-tr from-stone-300 to-neutral-300 dark:from-stone-900 dark:to-neutral-900
+  }
+}
