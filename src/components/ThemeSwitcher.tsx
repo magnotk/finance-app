@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { FiLoader, FiMoon, FiSun } from 'react-icons/fi'
 
-export default function ThemeSwitch() {
+export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false)
   const { setTheme, resolvedTheme } = useTheme()
 

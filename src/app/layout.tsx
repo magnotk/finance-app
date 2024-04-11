@@ -18,10 +18,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body className={`${inter.className}`}>
-        <Providers>
-          {/* Navbar */}
-          <main className="p-4 md:p-6">{children}</main>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
