@@ -1,6 +1,6 @@
 import { getExpenses } from '@/actions'
 import { PageTitle } from '@/components/PageTitle'
-import { RenderExpenseList } from '@/components/renders/expenses'
+import { Cards } from '@/components/renders/cards'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 
@@ -15,7 +15,7 @@ export default async function ExpensePage() {
           <Button color="success">Cadastrar</Button>
         </Link>
       </div>
-      <RenderExpenseList data={expenses} />
+      <Cards data={{ expenses }} />
     </>
   )
 }

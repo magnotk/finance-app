@@ -12,7 +12,7 @@ model Expense {
   id          String          @id @default(cuid())
   category    ExpenseCategory @relation(fields: [category_id], references: [id])
   category_id String
-  description String
+  description String          @unique
   value       Float
   status      ExpenseStatus   @default(CURRENT)
   month       Int
@@ -23,9 +23,11 @@ model Receipt {
   id          String          @id @default(cuid())
   category    ReceiptCategory @relation(fields: [category_id], references: [id])
   category_id String
-  description String
+  description String          @unique
   value       Float
   status      Boolean
+  month       Int
+  uuid        String
 }
 
 model ExpenseCategory {
