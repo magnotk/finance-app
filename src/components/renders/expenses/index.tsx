@@ -19,7 +19,7 @@ export function RenderExpenseList({ data }: Props) {
       .reduce((acc, item) => acc + item.value, 0)
 
   return (
-    <div className="my-5">
+    <div className="my-5 text-sm md:text-base">
       {Object.keys(groupedExpenses).map((month) => (
         <section
           key={month}
@@ -33,10 +33,7 @@ export function RenderExpenseList({ data }: Props) {
               category={category}
             />
           ))}
-          <Footer
-            sum={totalMonthly(parseInt(month))}
-            month={MonthToString[parseInt(month)].label}
-          />
+          <Footer sum={totalMonthly(parseInt(month))} />
         </section>
       ))}
     </div>
