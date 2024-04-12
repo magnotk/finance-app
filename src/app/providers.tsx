@@ -9,7 +9,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <NextUIProvider>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         {children}
-        <Toaster position="top-right" />
+        <Toaster />
       </ThemeProvider>
     </NextUIProvider>
   )
