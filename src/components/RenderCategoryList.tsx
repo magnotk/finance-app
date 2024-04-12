@@ -22,21 +22,34 @@ export function RenderCategoryList({ data, title }: Props) {
     }
   }
 
+  function ListItem({ id, description }: { id: string; description: string }) {
+    return (
+      <span
+        key={id}
+        className="mb-2 flex items-center justify-between gap-2 rounded-lg border border-neutral-500 p-1.5 shadow"
+      >
+        {description}{' '}
+        {
+          <FaWindowClose
+            className="cursor-pointer text-orange-500"
+            onClick={() => onDelete(id, description)}
+          />
+        }
+      </span>
+    )
+  }
+
   return (
     <div className="mx-auto my-5 flex max-w-lg flex-col gap-2.5 rounded-2xl border border-neutral-500 bg-neutral-200 p-2 shadow-md dark:bg-neutral-800">
       <PageTitle title={title} />
       <div className="flex flex-col">
         {data.length ? (
           data.map((item) => (
-            <span key={item.id} className="flex items-center gap-2">
-              {item.description}{' '}
-              {
-                <FaWindowClose
-                  className="cursor-pointer text-orange-500"
-                  onClick={() => onDelete(item.id, item.description)}
-                />
-              }
-            </span>
+            <ListItem
+              key={item.id}
+              id={item.id}
+              description={item.description}
+            />
           ))
         ) : (
           <p className="p-2.5 text-center opacity-60">
