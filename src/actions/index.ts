@@ -9,6 +9,15 @@ import {
 } from '@/lib/states'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { randomUUID } from 'node:crypto'
+
+export async function getExpenses() {
+  return prisma.expense.findMany({ include: { category: true } })
+}
+
+export async function getReceipts() {
+  return prisma.receipt.findMany({ include: { category: true } })
+}
 
 export async function getExpensesCategory() {
   return prisma.expenseCategory.findMany({ orderBy: { description: 'asc' } })
@@ -33,9 +42,26 @@ export async function createExpense(
     return { errors: parsed.error.flatten().fieldErrors }
   }
 
-  console.log('cadastrando: ', parsed.data)
+  const data = []
+  const recurrency = parsed.data.recurrency
+  let referenceMonth = new Date().getMonth()
+  const uuid = randomUUID()
 
-  return { errors: {} }
+  for (let i = 1; i <= recurrency; i++) {
+    data.push({
+      category_id: parsed.data.category,
+      description: parsed.data.description,
+      value: parsed.data.value,
+      month: referenceMonth,
+      uuid,
+    })
+    referenceMonth++
+  }
+
+  await prisma.expense.createMany({ data })
+
+  revalidatePath('/')
+  redirect('/expense')
 }
 
 export async function createReceipt(

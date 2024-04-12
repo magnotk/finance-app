@@ -15,6 +15,8 @@ model Expense {
   description String
   value       Float
   status      ExpenseStatus   @default(CURRENT)
+  month       Int
+  uuid        String
 }
 
 model Receipt {
@@ -28,13 +30,13 @@ model Receipt {
 
 model ExpenseCategory {
   id          String    @id @default(cuid())
-  description String
+  description String    @unique
   Expense     Expense[]
 }
 
 model ReceiptCategory {
   id          String    @id @default(cuid())
-  description String
+  description String    @unique
   Receipt     Receipt[]
 }
 

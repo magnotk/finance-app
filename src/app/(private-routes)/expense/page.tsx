@@ -1,8 +1,12 @@
+import { getExpenses } from '@/actions'
 import { PageTitle } from '@/components/PageTitle'
+import { RenderExpenseList } from '@/components/renders/expenses'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 
-export default function ExpensePage() {
+export default async function ExpensePage() {
+  const expenses = await getExpenses()
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -11,6 +15,7 @@ export default function ExpensePage() {
           <Button color="success">Cadastrar</Button>
         </Link>
       </div>
+      <RenderExpenseList data={expenses} />
     </>
   )
 }

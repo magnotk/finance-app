@@ -1,6 +1,6 @@
 import { getExpensesCategory, getReceiptsCategory } from '@/actions'
 import { PageTitle } from '@/components/PageTitle'
-import { RenderCategoryList } from '@/components/RenderCategoryList'
+import { RenderCategoryList } from '@/components/renders/categories'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 

@@ -1,9 +1,9 @@
 'use client'
 
 import { FaWindowClose } from 'react-icons/fa'
-import { PageTitle } from './PageTitle'
 import { deleteCategory } from '@/actions'
 import { toast } from 'sonner'
+import { PageTitle } from '@/components/PageTitle'
 
 interface Props {
   data: Record<string, string>[]
