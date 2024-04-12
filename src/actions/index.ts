@@ -1,17 +1,21 @@
 'use server'
 
-import { ExpenseSchema } from '@/lib/schemas'
-import { ExpenseFormState, ReceiptFormState } from '@/lib/states'
-import { ExpenseCategory, ReceiptCategory } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
+import { CategorySchema, ExpenseSchema } from '@/lib/schemas'
+import {
+  CategoryFormState,
+  ExpenseFormState,
+  ReceiptFormState,
+} from '@/lib/states'
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
 export async function getExpensesCategory() {
-  const expenses: ExpenseCategory[] = []
-  return expenses
+  return prisma.expenseCategory.findMany({ orderBy: { description: 'asc' } })
 }
 
 export async function getReceiptsCategory() {
-  const receipts: ReceiptCategory[] = []
-  return receipts
+  return prisma.receiptCategory.findMany({ orderBy: { description: 'asc' } })
 }
 
 export async function createExpense(
@@ -26,7 +30,6 @@ export async function createExpense(
   })
 
   if (!parsed.success) {
-    console.log('erro', parsed.error.message)
     return { errors: parsed.error.flatten().fieldErrors }
   }
 
@@ -53,4 +56,50 @@ export async function createReceipt(
   console.log('cadastrando: ', parsed.data)
 
   return { errors: {} }
+}
+
+export async function createCategory(
+  formState: CategoryFormState,
+  formData: FormData,
+): Promise<CategoryFormState> {
+  const parsed = CategorySchema.safeParse({
+    description: formData.get('description'),
+    type: formData.get('type'),
+  })
+
+  if (!parsed.success) {
+    return { errors: parsed.error.flatten().fieldErrors }
+  }
+
+  if (parsed.data.type === 'expense') {
+    await prisma.expenseCategory.create({
+      data: { description: parsed.data.description },
+    })
+  }
+
+  if (parsed.data.type === 'receipt') {
+    await prisma.receiptCategory.create({
+      data: { description: parsed.data.description },
+    })
+  }
+
+  revalidatePath('/')
+  redirect('/category')
+}
+
+export async function deleteCategory(id: string) {
+  const [expenseCategory, receiptCategory] = await Promise.all([
+    prisma.expenseCategory.findFirst({ where: { id } }),
+    prisma.receiptCategory.findFirst({ where: { id } }),
+  ])
+
+  if (!expenseCategory && !receiptCategory) return
+
+  if (expenseCategory) {
+    await prisma.expenseCategory.delete({ where: { id } })
+  } else if (receiptCategory) {
+    await prisma.receiptCategory.delete({ where: { id } })
+  }
+
+  return revalidatePath('/')
 }

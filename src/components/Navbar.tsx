@@ -10,6 +10,7 @@ import {
   GiPayMoney,
   GiReceiveMoney,
 } from 'react-icons/gi'
+import { TbCategoryPlus } from 'react-icons/tb'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -37,6 +38,11 @@ export default function Navbar() {
             href="/receipt"
             title="Receitas"
             icon={<GiReceiveMoney size={26} />}
+          />
+          <ModalItem
+            href="/category"
+            title="Categorias"
+            icon={<TbCategoryPlus size={26} />}
           />
         </section>
       </div>

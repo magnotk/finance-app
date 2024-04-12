@@ -17,3 +17,11 @@ export interface ReceiptFormState {
     _form?: string
   }
 }
+
+export interface CategoryFormState {
+  errors: {
+    description?: string[]
+    type?: string[]
+    _form?: string
+  }
+}

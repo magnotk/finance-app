@@ -21,9 +21,9 @@ export function ExpenseForm({ categories }: Props) {
   return (
     <form action={action} className="flex flex-col gap-5">
       <InputCategory data={categories} state={formState?.errors.category} />
-      <InputDescription />
-      <InputValue />
-      <InputRecurrency />
+      <InputDescription state={formState?.errors.description} />
+      <InputValue state={formState?.errors.value} />
+      <InputRecurrency state={formState?.errors.recurrency} />
       {formState?.errors._form && <p>{formState.errors._form}</p>}
       <footer className="flex justify-end gap-5">
         <Link href="/expense">

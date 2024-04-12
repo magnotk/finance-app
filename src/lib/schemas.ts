@@ -4,41 +4,48 @@ const parseValue = (value: string) =>
   parseFloat(value.replace('R$', '').replace('.', '').replace(',', '.'))
 
 export const ExpenseSchema = z.object({
-  category: z.string(),
+  category: z.string().refine((val) => {
+    if (!val) return false
+  }, 'Selecione a categoria'),
   description: z.string().min(1, 'Informe a descrição'),
   value: z
     .string()
-    .min(1, 'Informe o valor')
     .refine((val) => {
       const parsedValue = parseValue(val)
       return !isNaN(parsedValue)
-    }, 'Valor inválido')
+    }, 'Informe o valor')
     .transform((val) => parseValue(val)),
   recurrency: z
     .string()
-    .min(1, 'Informe a quantidade de lançamentos')
+    .nullable()
     .refine((val) => {
-      return !isNaN(Number(val))
-    }, 'Recorrência inválida')
+      if (isNaN(Number(val)) || !val) return false
+    }, 'Selecione a recorrência')
     .transform((val) => Number(val)),
 })
 
 export const ReceiptSchema = z.object({
-  category: z.string(),
+  category: z.string().refine((val) => {
+    if (!val) return false
+  }, 'Selecione a categoria'),
   description: z.string().min(1, 'Informe a descrição'),
   value: z
     .string()
-    .min(1, 'Informe o valor')
     .refine((val) => {
       const parsedValue = parseValue(val)
       return !isNaN(parsedValue)
-    }, 'Valor inválido')
+    }, 'Informe o valor')
     .transform((val) => parseValue(val)),
   recurrency: z
     .string()
-    .min(1, 'Informe a quantidade de lançamentos')
+    .nullable()
     .refine((val) => {
-      return !isNaN(Number(val))
-    }, 'Recorrência inválida')
+      if (isNaN(Number(val)) || !val) return false
+    }, 'Selecione a recorrência')
     .transform((val) => Number(val)),
+})
+
+export const CategorySchema = z.object({
+  description: z.string().min(1, 'Informe a descrição'),
+  type: z.enum(['expense', 'receipt']),
 })

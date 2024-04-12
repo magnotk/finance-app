@@ -1,5 +1,16 @@
 import { Input } from '@nextui-org/react'
 
-export function InputDescription() {
-  return <Input label="Descrição" name="description" />
+interface Props {
+  state?: string[]
+}
+
+export function InputDescription({ state }: Props) {
+  return (
+    <Input
+      label="Descrição"
+      name="description"
+      isInvalid={!!state}
+      errorMessage={state}
+    />
+  )
 }

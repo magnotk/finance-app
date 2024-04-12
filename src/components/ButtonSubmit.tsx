@@ -1,4 +1,7 @@
+'use client'
+
 import { Button } from '@nextui-org/react'
+import { useFormStatus } from 'react-dom'
 
 interface Props {
   title: string
@@ -6,8 +9,10 @@ interface Props {
 }
 
 export function ButtonSubmit({ title, color }: Props) {
+  const { pending } = useFormStatus()
+
   return (
-    <Button type="submit" color={color}>
+    <Button type="submit" color={color} isLoading={pending}>
       {title}
     </Button>
   )
