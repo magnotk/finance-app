@@ -23,7 +23,7 @@ export function RenderCategoryList({ data, title }: Props) {
   }
 
   return (
-    <div className="my-5 flex flex-col gap-2.5 rounded-2xl border border-neutral-500 bg-neutral-200 p-2 shadow-md dark:bg-neutral-800">
+    <div className="mx-auto my-5 flex max-w-lg flex-col gap-2.5 rounded-2xl border border-neutral-500 bg-neutral-200 p-2 shadow-md dark:bg-neutral-800">
       <PageTitle title={title} />
       <div className="flex flex-col">
         {data.length ? (
