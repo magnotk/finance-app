@@ -1,11 +1,13 @@
 import { getReceipts } from '@/actions'
 import { PageTitle } from '@/components/PageTitle'
-import { Cards } from '@/components/renders/cards'
+import { CardReceipt, CardWrapper } from '@/components/renders/cards'
+import { groupedReceiptByCategory } from '@/utils/groupReceiptByCategory'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
 
 export default async function ReceiptPage() {
   const receipts = await getReceipts()
+  const groupedReceipts = groupedReceiptByCategory({ data: receipts })
 
   return (
     <>
@@ -15,7 +17,16 @@ export default async function ReceiptPage() {
           <Button color="success">Cadastrar</Button>
         </Link>
       </div>
-      <Cards data={{ receipts }} />
+      <CardWrapper>
+        {Object.keys(groupedReceipts).map((month) => (
+          <CardReceipt
+            key={month}
+            month={parseInt(month)}
+            data={receipts}
+            groupedReceipts={groupedReceipts}
+          />
+        ))}
+      </CardWrapper>
     </>
   )
 }

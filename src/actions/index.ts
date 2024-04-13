@@ -27,6 +27,12 @@ export async function getReceiptsCategory() {
   return prisma.receiptCategory.findMany({ orderBy: { description: 'asc' } })
 }
 
+export async function getExpensesLated() {
+  return prisma.expense.findMany({
+    where: { status: 'LATE' },
+  })
+}
+
 export async function createExpense(
   formState: ExpenseFormState,
   formData: FormData,
