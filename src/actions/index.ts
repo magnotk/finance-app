@@ -33,6 +33,35 @@ export async function getExpensesLated() {
   })
 }
 
+export async function getAnnualHistory() {
+  const months = Array.from({ length: 12 }, (_, i) => i)
+
+  const annualHistory = await Promise.all(
+    months.map(async (month) => {
+      const expenses = await prisma.expense.findMany({ where: { month } })
+      const receipts = await prisma.expense.findMany({ where: { month } })
+
+      if (expenses.length === 0 && receipts.length === 0) return undefined
+
+      const totalExpense = expenses.reduce(
+        (acc, expense) => acc + expense.value,
+        0,
+      )
+
+      const totalReceipt = receipts.reduce(
+        (acc, receipt) => acc + receipt.value,
+        0,
+      )
+
+      if (totalExpense === 0 && totalReceipt === 0) return undefined
+
+      return totalReceipt > totalExpense
+    }),
+  )
+
+  return annualHistory
+}
+
 export async function createExpense(
   formState: ExpenseFormState,
   formData: FormData,

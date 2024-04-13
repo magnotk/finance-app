@@ -10,4 +10,8 @@
   form {
     @apply max-w-lg mx-auto my-5
   }
+
+  ::-webkit-scrollbar {
+      @apply hidden
+  }
 }
