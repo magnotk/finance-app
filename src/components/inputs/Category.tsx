@@ -12,6 +12,7 @@ export function InputCategory({ data, state }: Props) {
       name="category"
       isInvalid={!!state}
       errorMessage={state}
+      isDisabled={!data.length}
     >
       {data?.map((item) => (
         <SelectItem key={item.id}>{item.description}</SelectItem>
