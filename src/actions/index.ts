@@ -79,9 +79,26 @@ export async function createReceipt(
     return { errors: parsed.error.flatten().fieldErrors }
   }
 
-  console.log('cadastrando: ', parsed.data)
+  const data = []
+  const recurrency = parsed.data.recurrency
+  let referenceMonth = new Date().getMonth()
+  const uuid = randomUUID()
 
-  return { errors: {} }
+  for (let i = 1; i <= recurrency; i++) {
+    data.push({
+      category_id: parsed.data.category,
+      description: parsed.data.description,
+      value: parsed.data.value,
+      month: referenceMonth,
+      uuid,
+    })
+    referenceMonth++
+  }
+
+  await prisma.receipt.createMany({ data })
+
+  revalidatePath('/')
+  redirect('/receipt')
 }
 
 export async function createCategory(
