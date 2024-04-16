@@ -114,6 +114,8 @@ export async function createReceipt(
     return { errors: parsed.error.flatten().fieldErrors }
   }
 
+  console.log(parsed.data)
+
   const data = []
   const recurrency = parsed.data.recurrency
   let referenceMonth = new Date().getMonth()
@@ -129,8 +131,10 @@ export async function createReceipt(
     })
     referenceMonth++
   }
+  console.log(data)
 
   await prisma.receipt.createMany({ data })
+  console.log(data)
 
   revalidatePath('/')
   redirect('/receipt')

@@ -22,7 +22,7 @@ export function AnnualHistory({
       <div
         className={`mx-2 h-2 w-2 rounded-full ${expense > receipt ? 'bg-orange-500' : expense < receipt ? 'bg-green-500' : 'bg-white'}`}
       />
-      <span>{MonthToString[month].label}</span>
+      <span>{MonthToString[month].label.slice(0, 3)}</span>
     </div>
   )
 
