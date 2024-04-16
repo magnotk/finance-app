@@ -39,7 +39,7 @@ export async function getAnnualHistory() {
   const annualHistory = await Promise.all(
     months.map(async (month) => {
       const expenses = await prisma.expense.findMany({ where: { month } })
-      const receipts = await prisma.expense.findMany({ where: { month } })
+      const receipts = await prisma.receipt.findMany({ where: { month } })
 
       if (expenses.length === 0 && receipts.length === 0) return undefined
 
@@ -55,7 +55,7 @@ export async function getAnnualHistory() {
 
       if (totalExpense === 0 && totalReceipt === 0) return undefined
 
-      return totalReceipt > totalExpense
+      return { month, expense: totalExpense, receipt: totalReceipt }
     }),
   )
 

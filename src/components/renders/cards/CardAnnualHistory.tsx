@@ -1,79 +1,60 @@
 'use client'
 
+import { currencyBRL } from '@/utils/currencyBRL'
+import { MonthToString } from '@/utils/monthToString'
+import { BiChevronDown, BiChevronUp } from 'react-icons/bi'
+
 export function AnnualHistory({
   history,
 }: {
-  history: (boolean | undefined)[]
+  history: ({ month: number; expense: number; receipt: number } | undefined)[]
 }) {
-  const bgColor = (value: boolean | undefined) => {
-    if (value === undefined) return
-    return value
-      ? 'bg-emerald-600/60 dark:bg-emerald-800/60'
-      : 'bg-red-700/80 text-white dark:bg-red-800/60'
-  }
+  const Month = ({
+    month,
+    expense,
+    receipt,
+  }: {
+    month: number
+    expense: number
+    receipt: number
+  }) => (
+    <div className="flex items-center">
+      <div
+        className={`mx-2 h-2 w-2 rounded-full ${expense > receipt ? 'bg-orange-500' : expense < receipt ? 'bg-green-500' : 'bg-white'}`}
+      />
+      <span>{MonthToString[month].label}</span>
+    </div>
+  )
+
+  const Expenses = ({ total }: { total?: number }) => (
+    <div className="mx-2 flex items-center">
+      <BiChevronUp size={20} className="text-orange-500" />
+      <span className="text-sm">{currencyBRL(total || 0)}</span>
+    </div>
+  )
+
+  const Receipts = ({ total }: { total?: number }) => (
+    <div className="mx-2 flex items-center">
+      <BiChevronDown size={20} className="text-green-500" />
+      <span className="text-sm">{currencyBRL(total || 0)}</span>
+    </div>
+  )
 
   return (
-    <div className="my-5 flex gap-1 overflow-x-auto rounded-lg border border-neutral-500 bg-neutral-200 px-1 py-2 dark:bg-neutral-800">
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[0])}`}
-      >
-        JAN
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[1])}`}
-      >
-        FEV
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[2])}`}
-      >
-        MAR
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[3])}`}
-      >
-        ABR
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[4])}`}
-      >
-        MAI
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[5])}`}
-      >
-        JUN
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[6])}`}
-      >
-        JUL
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[7])}`}
-      >
-        AGO
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[8])}`}
-      >
-        SET
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[9])}`}
-      >
-        OUT
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[10])}`}
-      >
-        NOV
-      </span>
-      <span
-        className={`flex-1 rounded-lg border border-neutral-500 px-1 py-0.5 ${bgColor(history[11])}`}
-      >
-        DEZ
-      </span>
+    <div className="my-5 flex flex-col gap-1 overflow-x-auto rounded-lg border border-neutral-500 bg-neutral-200 px-1 py-2 dark:bg-neutral-800">
+      {history.map((item) => (
+        <div className="grid grid-cols-3">
+          {item?.month && (
+            <Month
+              month={item.month}
+              expense={item.expense}
+              receipt={item.receipt}
+            />
+          )}
+          <Receipts total={item?.receipt} />
+          <Expenses total={item?.expense} />
+        </div>
+      ))}
     </div>
   )
 }

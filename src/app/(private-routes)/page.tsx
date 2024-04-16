@@ -10,7 +10,6 @@ export default async function Home() {
     getAnnualHistory(),
   ])
   const total = expenseLated.reduce((acc, item) => acc + item.value, 0)
-  console.log(history)
 
   return (
     <div className="mx-auto max-w-lg">
